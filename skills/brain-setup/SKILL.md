@@ -164,6 +164,12 @@ Check if `.brain/` already exists in the current working directory.
 3. **Check for outdated CLAUDE.md:** Does the project CLAUDE.md lack an Obsidian CLI section or Global Brain reference?
    - If yes → append the missing sections
 
+4. **Enrich the knowledge graph (Step 3j):** Always run the graph seeding step on re-run, even if the brain already exists. The seeder is idempotent — it skips existing notes and only creates missing ones. On re-run it should:
+   - Re-scan the project for new entities, tools, data sources, or concepts that appeared since last setup (new dependencies in package.json, new files, new git history)
+   - Check for unfilled wikilink stubs in the hub vault (notes referenced via `[[link]]` but empty or non-existent) and fill them
+   - Verify link density — if any existing note has fewer than 3 outgoing wikilinks, add more cross-links
+   - Report what was added vs what was already present
+
 Do NOT ask the user if they want to update or abort. Just fix what's missing and report what was done.
 Show a concise summary: "✅ Updated — added [list of what changed]"
 
