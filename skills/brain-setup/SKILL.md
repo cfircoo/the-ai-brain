@@ -2,11 +2,11 @@
 name: brain-setup
 model: claude-opus-4-6
 context: forked
-description: Initialize The AI Brain in the current directory. Hybrid mode — silently infers from existing context when possible, interviews the user when context is sparse. Can spawn a sub-agent to gather profile information without interrupting the main session.
+description: Initialize The AI Brain in the current directory. Hybrid mode — silently infers from existing context when possible, interviews the user when context is sparse. Seeds the Obsidian knowledge graph with MOC hubs, entity notes, and cross-links for a rich graph view out of the box.
 ---
 
 <objective>
-Initialize The AI Brain persistent memory system in the current working directory. Uses a hybrid approach: silently read existing context clues first, only ask questions when context is insufficient. Creates the vault architecture (Human/ and Machine/ hemispheres), memory files, session log templates, behavioral rules, and generates agent-specific config files (CLAUDE.md, .cursorrules, GEMINI.md, AGENTS.md).
+Initialize The AI Brain persistent memory system in the current working directory. Uses a hybrid approach: silently read existing context clues first, only ask questions when context is insufficient. Creates the vault architecture (Human/ and Machine/ hemispheres), memory files, session log templates, behavioral rules, agent-specific config files (CLAUDE.md, .cursorrules, GEMINI.md, AGENTS.md), and seeds the Obsidian knowledge graph with MOC hub notes, entity notes, and dense cross-links for an immediately rich and navigable graph view.
 </objective>
 
 <protocol>
@@ -470,6 +470,95 @@ Create/merge `.claude/settings.json` with hook configuration.
 
 ---
 
+### 3j. Seed the Knowledge Graph
+
+After the vault structure and hooks are in place, seed the hub vault with **MOC hub notes** and **entity notes** so the Obsidian graph view is immediately rich and navigable. This step runs on the **hub vault** (not the project vault).
+
+**Only runs if ARCH_MODE = hub-spokes and a hub vault exists.**
+
+**What seeding creates:**
+
+1. **MOC (Map of Content) hub notes** — these become the high-degree backbone nodes in graph view. Create one MOC per domain the user works in, inferred from Step 1 context scanning.
+
+   Format for each MOC:
+   ```markdown
+   ---
+   tags: [type/MOC, domain/{domain}]
+   created: {today}
+   ---
+   # MOC — {Domain Name}
+
+   {One-line description connecting to [[owner-name]]'s work.}
+
+   ## Projects
+   - [[{project-name}]] — {brief description}
+
+   ## Tools & Platforms
+   - [[{tool}]] — {role in this domain}
+
+   ## Concepts
+   - [[{concept}]] — {brief description}
+   ```
+
+   Typical MOCs to consider (create only those relevant to the user):
+   - `MOC — Trading` (if financial/trading domain)
+   - `MOC — AI Tooling` (if AI/ML/agent work)
+   - `MOC — Web Development` (if web stack)
+   - `MOC — Projects` (always create — indexes all projects)
+   - `MOC — DevOps` (if infrastructure work)
+
+2. **Entity hub notes** — one note per recurring tool, platform, data source, or concept that appears across multiple projects or contexts. These become bridge nodes connecting different graph clusters.
+
+   Format for each entity:
+   ```markdown
+   ---
+   tags: [type/{tool|language|data-source|concept|platform}, domain/{domain}]
+   created: {today}
+   ---
+   # {Entity Name}
+
+   {One-line description.}
+
+   ## How [[{owner}]] Uses It
+   - {Usage in project 1}
+   - {Usage in project 2}
+
+   ## Related
+   - [[{MOC}]]
+   - [[{related-entity}]]
+   ```
+
+   Entity discovery sources:
+   - Tech stack from `package.json`, `pyproject.toml`, etc.
+   - Tools mentioned in CLAUDE.md or README.md
+   - Data sources referenced in code
+   - Platforms (deployment targets, APIs, databases)
+
+3. **Fill existing stub notes** — if any `.md` files in the hub vault are empty (created as wikilink targets but never filled), populate them with frontmatter + content + cross-links.
+
+4. **Enrich the owner note** — the `{owner-name}.md` note should link to all MOCs, all projects, and key tools. This makes it the central hub of the entire graph.
+
+**Seeding rules:**
+- Target **4-8 outgoing `[[wikilinks]]`** per note — this creates visible graph density
+- Every entity note must link to at least one MOC and one project
+- Every MOC must link to the owner note and at least 3 entities
+- Use bidirectional linking — if A links to B, B should link back to A
+- **Never create notes for things that don't exist** — only seed from what was actually discovered in Step 1
+- Skip notes that already exist in the hub vault — never overwrite
+- Count total notes created and total wikilinks generated for the summary
+
+**After seeding, report:**
+```
+🌐 Graph seeded:
+   {N} MOC hub notes created
+   {M} entity notes created
+   {K} stub notes filled
+   {T} total [[wikilinks]] across all new notes
+   Estimated graph density: {average links per note}
+```
+
+---
+
 ## Step 4: Context Injection
 
 **Skip this step if ARCH_MODE = hub-spokes** — Step 3h already wired `~/.claude/CLAUDE.md` to the hub. The project CLAUDE.md also already references the hub. Nothing more needed.
@@ -513,6 +602,14 @@ If **Manual**: show the line to paste.
   Project registered in [hub path]/Machine/Memory/projects.md
   Every session on this machine now loads your global identity.
 
+[If graph was seeded (Hub+Spokes):]
+  🌐 Graph seeded:
+     {N} MOC hub notes — domain clusters for graph view
+     {M} entity notes  — bridge nodes (tools, platforms, concepts)
+     {K} stub notes filled
+     {T} total [[wikilinks]] across all new notes
+     Open Obsidian graph view to see your knowledge graph.
+
 Your slash commands:
   /brain-today    — run this tomorrow morning
   /brain-new      — drop any thought, it gets routed automatically
@@ -553,5 +650,6 @@ Your slash commands:
 - CLAUDE.md generated at vault root
 - Hook scripts are executable
 - Context injection configured per user's choice
-- User sees clear final summary with next steps
+- If Hub+Spokes: knowledge graph seeded with MOC hubs, entity notes, and cross-links (4+ wikilinks per note, zero orphan notes)
+- User sees clear final summary with next steps including graph seeding stats
 </success_criteria>
