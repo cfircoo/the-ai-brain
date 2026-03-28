@@ -129,7 +129,7 @@ After triggering the Obsidian install, **STOP and wait**. Display:
 
   1. Finish installing Obsidian from the download above
   2. Open Obsidian and create or open a vault
-  3. Go to Settings → General → find "Command Line Interface"
+  3. Go to Settings → General → Advanced → find "Command Line Interface"
   4. Toggle it ON → click "Register CLI"
   5. Open a NEW terminal session
   6. Run: obsidian --version  ← confirm this works
