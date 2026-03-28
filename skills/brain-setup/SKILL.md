@@ -122,16 +122,27 @@ sudo chown root:root /tmp/.mount_obsidi*/chrome-sandbox 2>/dev/null
 sudo chmod 4755 /tmp/.mount_obsidi*/chrome-sandbox 2>/dev/null
 ```
 
-After installing Obsidian, remind:
-```
-Obsidian installed. Two manual steps needed:
-  1. Open Obsidian → Settings → General → find "Command Line Interface"
-  2. Toggle it ON → click "Register CLI" → open a NEW terminal session
-  3. Verify with: obsidian --version
+After triggering the Obsidian install, **STOP and wait**. Display:
 
-  Note: Obsidian must be running in the background for CLI commands to work.
-  Then re-run /brain-setup to activate CLI integration.
 ```
+⏸ Obsidian needs a few manual steps before setup can continue.
+
+  1. Finish installing Obsidian from the download above
+  2. Open Obsidian and create or open a vault
+  3. Go to Settings → General → find "Command Line Interface"
+  4. Toggle it ON → click "Register CLI"
+  5. Open a NEW terminal session
+  6. Run: obsidian --version  ← confirm this works
+
+  Note: Obsidian must stay running in the background for CLI commands to work.
+
+Type "done" when you've completed these steps, or "skip" to continue without Obsidian CLI.
+```
+
+**Do not proceed until the user types "done" or "skip".**
+
+- If "done": re-run `obsidian --version` to verify. If it works, show ✅ and continue. If it still fails, show the error and ask them to check the steps again.
+- If "skip": note that Obsidian CLI is disabled and continue with raw file reads.
 
 ---
 
