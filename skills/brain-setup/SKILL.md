@@ -277,21 +277,21 @@ After the vault preview (Step 2A or 2B), and before the user confirms, show this
 ```
 One more thing — how do you want to structure your brain?
 
-1. Hub + Spokes (recommended)
+1. Hub + Spokes ← default, press Enter to accept
    ~/Brain/ holds your identity, global rules, and cross-project memory.
    Each project gets its own .brain/ for local context.
    Both are always in context — you get the best of both worlds.
 
-2. Per-Project only (what you see above)
+2. Per-Project only
    Each project is isolated. No shared memory between projects.
    Good if projects are completely unrelated.
 
 3. Centralized only
    Everything in one vault. One CLAUDE.md, one memory, one graph.
    Good if you want a single Obsidian vault for everything.
-
-[default: 1]
 ```
+
+**If the user just presses Enter or says nothing, use Hub+Spokes.**
 
 Store the choice as `ARCH_MODE` = `hub-spokes` | `per-project` | `centralized`.
 
