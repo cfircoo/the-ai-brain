@@ -42,7 +42,7 @@ Also note any directories that exist but are not defined in `brain.yaml`.
 
 **If Obsidian CLI is available** (run `obsidian version` to check), use the built-in orphan command:
 ```bash
-obsidian orphans --format json
+obsidian orphans format=json
 ```
 This returns a JSON array of file paths with zero incoming links. Parse and display grouped by directory.
 

@@ -37,7 +37,7 @@ Scan `Machine/Session-Logs/` for the 3 most recent log files (sorted by filename
 
 ## Step 4: Read Yesterday's Daily Note
 
-**With Obsidian CLI:** Use `obsidian daily-note --yesterday --format json` to get yesterday's note content and incomplete tasks in one command.
+**With Obsidian CLI:** Use `obsidian daily:path` to get the daily note file path, then derive yesterday's path from it (adjust the date). Read the file directly to get yesterday's content and incomplete tasks.
 
 **Without Obsidian CLI:** (existing file read approach below)
 
@@ -49,7 +49,7 @@ Read `Human/Daily/{yesterday}.md` if it exists. Identify:
 
 ## Step 5: Read or Create Today's Daily Note
 
-**With Obsidian CLI:** Use `obsidian daily-note --today` to open/create today's note using your configured daily note template.
+**With Obsidian CLI:** Use `obsidian daily` to open/create today's note, and `obsidian daily:read` to read its contents.
 
 **Without Obsidian CLI:** (existing approach below)
 

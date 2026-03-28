@@ -29,17 +29,22 @@ Before doing ANY work:
 ## Obsidian CLI (if available)
 
 If `obsidian version` returns output, the Obsidian CLI is registered (Obsidian 1.12+).
+On WSL2, `obsidian` is aliased to the Windows `Obsidian.com` binary — the CLI connects to the running Windows Obsidian app, not the Linux AppImage.
 When available, **prefer CLI commands** over raw file reads for vault interactions:
 
 | Task | CLI command | Fallback |
 |------|------------|---------|
-| Search vault | `obsidian search "query" --format json` | Grep files |
-| Today's daily note | `obsidian daily-note --today` | Read file |
-| List incomplete tasks | `obsidian tasks --incomplete --format json` | Grep `- [ ]` |
-| Find orphaned notes | `obsidian orphans --format json` | Manual link scan |
-| Get backlinks | `obsidian backlinks "note" --format json` | Grep `[[note]]` |
-| Open a note | `obsidian open "path/to/note.md"` | N/A |
+| Search vault | `obsidian search query=<text> format=json` | Grep files |
+| Today's daily note | `obsidian daily` (open) / `obsidian daily:read` (read contents) | Read file |
+| Get daily note path | `obsidian daily:path` | Derive from date |
+| Append to daily note | `obsidian daily:append content=<text>` | Write to file |
+| List incomplete tasks | `obsidian tasks todo format=json` | Grep `- [ ]` |
+| List completed tasks | `obsidian tasks done format=json` | Grep `- [x]` |
+| Find orphaned notes | `obsidian orphans format=json` | Manual link scan |
+| Get backlinks | `obsidian backlinks file=<name> format=json` | Grep `[[note]]` |
+| Open a note | `obsidian open path=<path>` | N/A |
 
+CLI uses `key=value` syntax for parameters (not `--flag` style). Format is always `format=json`, not `--format json`.
 CLI output is structured JSON — parse it to get file paths, scores, and content snippets.
 This uses Obsidian's internal search index and costs near-zero tokens vs reading files individually.
 

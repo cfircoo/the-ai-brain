@@ -26,7 +26,7 @@ A universal persistent memory system for AI agents. Install into any directory o
 1. Install [Obsidian](https://obsidian.md/download) 1.12+
 2. Open Obsidian → Settings → General → enable **Command Line Interface**
 3. Click **Register CLI** — adds `obsidian` to your system PATH
-4. Run `obsidian --version` in terminal to verify
+4. Run `obsidian version` in terminal to verify
 5. The brain auto-detects it during `install.sh`
 
 > Obsidian is **not required**. The brain works on any plain directory with raw markdown files.
@@ -132,14 +132,14 @@ When [Obsidian 1.12+](https://obsidian.md) is installed with the CLI enabled (Se
 1. Install [Obsidian](https://obsidian.md/download) 1.12+
 2. Open Obsidian → Settings → General → enable **Command Line Interface**
 3. Click **Register CLI** — Obsidian adds itself to your system PATH
-4. Run `obsidian --version` in terminal to verify
+4. Run `obsidian version` in terminal to verify
 5. Re-run `bash install.sh` on your vault — CLI is auto-detected
 
 ### What changes with the CLI
 
-- `session-start.sh` uses `obsidian tasks --incomplete` for real task lists
-- `/brain-vault-audit` uses `obsidian orphans` for instant orphan detection
-- `/brain-today` uses `obsidian daily-note` for native daily note integration
+- `session-start.sh` uses `obsidian tasks todo format=json` for real task lists
+- `/brain-vault-audit` uses `obsidian orphans format=json` for instant orphan detection
+- `/brain-today` uses `obsidian daily` / `obsidian daily:read` for native daily note integration
 - `/brain-canvas` creates `.canvas` files and opens them in Obsidian instantly
 
 ### Official skills by kepano

@@ -23,8 +23,8 @@ If visualizing vault content:
 
 **With Obsidian CLI:**
 ```bash
-obsidian search "<topic>" --format json
-obsidian backlinks "<note-name>" --format json
+obsidian search query=<topic> format=json
+obsidian backlinks file=<note-name> format=json
 ```
 
 **Without Obsidian CLI:**

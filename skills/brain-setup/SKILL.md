@@ -26,7 +26,7 @@ Before anything else, silently check for required and optional tools. Use `comma
 |------|-------|-------------------|
 | `python3` | `command -v python3` | Obsidian CLI JSON parsing in hooks |
 | `yq` | `command -v yq` | Better YAML parsing in generators |
-| `obsidian` | `command -v obsidian` + `obsidian --version` | 70,000x faster vault search via CLI (requires Obsidian running) |
+| `obsidian` | `command -v obsidian` + `obsidian version` | 70,000x faster vault search via CLI (requires Obsidian running) |
 
 ### If anything is missing:
 
@@ -132,7 +132,7 @@ After triggering the Obsidian install, **STOP and wait**. Display:
   3. Go to Settings → General → Advanced → find "Command Line Interface"
   4. Toggle it ON → click "Register CLI"
   5. Open a NEW terminal session
-  6. Run: obsidian --version  ← confirm this works
+  6. Run: obsidian version  ← confirm this works
 
   Note: Obsidian must stay running in the background for CLI commands to work.
 
@@ -141,7 +141,7 @@ Type "done" when you've completed these steps, or "skip" to continue without Obs
 
 **Do not proceed until the user types "done" or "skip".**
 
-- If "done": re-run `obsidian --version` to verify. If it works, show ✅ and continue. If it still fails, show the error and ask them to check the steps again.
+- If "done": re-run `obsidian version` to verify. If it works, show ✅ and continue. If it still fails, show the error and ask them to check the steps again.
 - If "skip": note that Obsidian CLI is disabled and continue with raw file reads.
 
 ---

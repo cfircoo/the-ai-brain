@@ -24,7 +24,7 @@ STATE_FILE="$BRAIN_DIR/state.json"
 OBSIDIAN_CLI=""
 if command -v obsidian &>/dev/null; then
   # Verify it's the Obsidian app CLI (not some other 'obsidian' binary)
-  if obsidian --version &>/dev/null 2>&1; then
+  if obsidian version &>/dev/null 2>&1; then
     OBSIDIAN_CLI="obsidian"
   fi
 fi
@@ -116,11 +116,11 @@ fi
 TODAY=$(date +%Y-%m-%d)
 if [ -n "$OBSIDIAN_CLI" ]; then
   # Obsidian CLI path: search today's daily note via index (zero extra tokens for large vaults)
-  daily_content=$($OBSIDIAN_CLI search "date:$TODAY" --format json 2>/dev/null | \
-    python3 -c "import sys,json; d=json.load(sys.stdin); print(' | '.join(r.get('snippet','') for r in d[:3]))" 2>/dev/null || true)
+  daily_content=$($OBSIDIAN_CLI search "query=$TODAY" format=json 2>/dev/null | \
+    python3 -c "import sys,json; d=json.load(sys.stdin); items=d if isinstance(d,list) else d.get('results',[]); print(' | '.join(r.get('snippet','') for r in items[:3]))" 2>/dev/null || true)
   # Get incomplete tasks across entire vault
-  tasks_content=$($OBSIDIAN_CLI tasks --incomplete --format json 2>/dev/null | \
-    python3 -c "import sys,json; d=json.load(sys.stdin); items=d[:5]; print(' | '.join(t.get('text','') for t in items))" 2>/dev/null || true)
+  tasks_content=$($OBSIDIAN_CLI tasks todo format=json 2>/dev/null | \
+    python3 -c "import sys,json; d=json.load(sys.stdin); items=d if isinstance(d,list) else d.get('tasks',[]); print(' | '.join(t.get('text','') for t in items[:5]))" 2>/dev/null || true)
   if [ -n "$daily_content" ]; then
     context_parts+=("[Today ($TODAY) via Obsidian CLI] $daily_content")
   fi
