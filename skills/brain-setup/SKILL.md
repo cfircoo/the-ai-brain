@@ -9,7 +9,91 @@ Initialize The AI Brain persistent memory system in the current working director
 
 <protocol>
 
-## Step 0: Check for Existing Brain
+## Step 0: Dependency Check
+
+Before anything else, silently check for required and optional tools. Use `command -v <tool>` or `which <tool>` to detect each one.
+
+### Required (brain will not work without these)
+
+| Tool | Check | Why needed |
+|------|-------|-----------|
+| `git` | `command -v git` | Vault version control |
+| `jq` | `command -v jq` | JSON processing in hooks |
+
+### Optional (brain works without these, but degrades)
+
+| Tool | Check | Benefit if present |
+|------|-------|-------------------|
+| `python3` | `command -v python3` | Obsidian CLI JSON parsing in hooks |
+| `yq` | `command -v yq` | Better YAML parsing in generators |
+| `obsidian` | `command -v obsidian` + `obsidian version` | 70,000x faster vault search via CLI |
+
+### If anything is missing:
+
+**For REQUIRED tools** — show what's missing and ask:
+```
+Missing required dependencies: [list]
+Install them now? [Y/n]
+```
+
+If yes, detect the package manager and install:
+```bash
+# macOS
+brew install git jq
+
+# Ubuntu/Debian
+sudo apt-get install -y git jq
+
+# Arch
+sudo pacman -S git jq
+
+# Windows (winget)
+winget install Git.Git jqlang.jq
+
+# Windows (choco)
+choco install git jq
+```
+
+Detect package manager priority: `brew` → `apt-get` → `pacman` → `winget` → `choco` → manual instructions.
+
+After installing, re-verify. If still missing after install attempt, stop and tell the user to install manually.
+
+**For OPTIONAL tools** — show a summary after check, don't block:
+```
+Optional tools:
+  ✅ python3  — found
+  ✅ yq       — found
+  ⬜ obsidian — not found (Obsidian CLI disabled; install Obsidian 1.12+ to enable)
+```
+
+If `obsidian` is missing, offer:
+```
+Install Obsidian now? It unlocks 70,000x faster vault search. [y/N]
+```
+
+If yes, install by platform:
+```bash
+# macOS
+brew install --cask obsidian
+
+# Linux (AppImage)
+wget -q https://github.com/obsidianmd/obsidian-releases/releases/latest/download/Obsidian-*.AppImage -O ~/obsidian.AppImage
+chmod +x ~/obsidian.AppImage
+
+# Windows (winget)
+winget install Obsidian.Obsidian
+```
+
+After installing Obsidian, remind:
+```
+Obsidian installed. One manual step needed:
+  Open Obsidian → Settings → General → Enable Command Line Interface → Register CLI
+  Then re-run /brain-setup to activate CLI integration.
+```
+
+---
+
+## Step 0b: Check for Existing Brain
 
 Check if `.brain/` already exists in the current working directory.
 - **If it exists:** Ask the user if they want to re-sync/update or abort. On update, preserve all existing Human/ and Machine/ content — only regenerate agent configs and add missing files.
