@@ -6,6 +6,7 @@
 [![Cursor](https://img.shields.io/badge/Cursor-supported-purple.svg)](https://cursor.sh)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-supported-blue.svg)](https://github.com/google-gemini/gemini-cli)
 [![OpenAI Codex](https://img.shields.io/badge/OpenAI%20Codex-supported-412991.svg)](https://openai.com)
+[![Obsidian CLI](https://img.shields.io/badge/Obsidian%20CLI-1.12%2B-7C3AED.svg)](https://obsidian.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/cfircoo/the-ai-brain/pulls)
 
 A universal persistent memory system for AI agents. Install into any directory or Obsidian vault to give your AI agent long-term memory, self-improving behavior, and structured workflows.
@@ -95,6 +96,45 @@ The installer will:
 | **Memory Files** | Entities, decisions, corrections | Updated continuously |
 | **Active Rules** | Behavioral rules (self-updating) | AI proposes, you approve |
 
+## Obsidian CLI Integration
+
+When [Obsidian 1.12+](https://obsidian.md) is installed with the CLI enabled (Settings → General → Command Line Interface), the brain automatically upgrades from raw file reads to Obsidian's internal search index.
+
+| Method | Token cost for 4,000-file vault | Capabilities |
+|--------|--------------------------------|--------------|
+| Raw file reads (default) | ~7M tokens for orphan scan | File contents only |
+| **Obsidian CLI (enhanced)** | **~100 tokens** | Search index, backlinks, tasks, orphans, canvases |
+
+> Benchmark by developer Boxin Proof: 70,000x token reduction on orphan detection.
+
+### Setup (30 seconds)
+
+1. Install [Obsidian](https://obsidian.md/download) 1.12+
+2. Open Obsidian → Settings → General → enable **Command Line Interface**
+3. Click **Register CLI** — Obsidian adds itself to your system PATH
+4. Run `obsidian version` in terminal to verify
+5. Re-run `bash install.sh` on your vault — CLI is auto-detected
+
+### What changes with the CLI
+
+- `session-start.sh` uses `obsidian tasks --incomplete` for real task lists
+- `/brain-vault-audit` uses `obsidian orphans` for instant orphan detection
+- `/brain-today` uses `obsidian daily-note` for native daily note integration
+- `/brain-canvas` creates `.canvas` files and opens them in Obsidian instantly
+
+### Official skills by kepano
+
+The Obsidian CEO ([kepano](https://github.com/kepano)) published official Claude Code skills at `kepano/obsidian-typhoon-skills`. These complement the brain with low-level CLI command knowledge. Install both:
+
+```bash
+# Install kepano's official Obsidian CLI skills
+git clone https://github.com/kepano/obsidian-typhoon-skills.git
+cp obsidian-typhoon-skills/skills/* ~/.claude/skills/
+
+# Then install the-ai-brain for persistent memory + workflows
+bash install.sh ~/your-vault
+```
+
 ### The Self-Improving Loop
 
 ```
@@ -116,6 +156,7 @@ Next session: AI behaves better → Repeat
 | `/brain-vault-align` | Re-sync agent configs from brain.yaml |
 | `/brain-reflect` | AI self-review - analyzes patterns, proposes improvements |
 | `/brain-ingest` | Import external content with proper formatting |
+| `/brain-canvas` | Create Obsidian JSON Canvas visualizations |
 
 ## Architecture
 

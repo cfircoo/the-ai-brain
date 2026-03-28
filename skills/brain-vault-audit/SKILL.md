@@ -40,6 +40,14 @@ Also note any directories that exist but are not defined in `brain.yaml`.
 
 ## Step 3: Orphan Detection
 
+**If Obsidian CLI is available** (run `obsidian version` to check), use the built-in orphan command:
+```bash
+obsidian orphans --format json
+```
+This returns a JSON array of file paths with zero incoming links. Parse and display grouped by directory.
+
+**If Obsidian CLI is not available**, fall back to the manual approach below:
+
 An orphaned file is one that has no incoming `[[wikilinks]]` from any other file in the vault.
 
 1. Build a list of all `.md` files in the vault.

@@ -16,6 +16,20 @@ BRAIN_DIR="$VAULT_DIR/.brain"
 STATE_FILE="$BRAIN_DIR/state.json"
 
 # ---------------------------------------------------------------------------
+# Obsidian CLI detection
+# Obsidian 1.12+ ships an official CLI. When available it provides search
+# indexing, task lists, and backlink traversal at near-zero token cost.
+# Falls back to direct file reads if the CLI is not registered.
+# ---------------------------------------------------------------------------
+OBSIDIAN_CLI=""
+if command -v obsidian &>/dev/null; then
+  # Verify it's the Obsidian app CLI (not some other 'obsidian' binary)
+  if obsidian version &>/dev/null 2>&1; then
+    OBSIDIAN_CLI="obsidian"
+  fi
+fi
+
+# ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
@@ -98,13 +112,29 @@ if [ -f "$ACTIVE_RULES" ]; then
   fi
 fi
 
-# 5. Today's daily note
+# 5. Today's daily note + incomplete tasks
 TODAY=$(date +%Y-%m-%d)
-DAILY_NOTE="$VAULT_DIR/Human/Daily/${TODAY}.md"
-if [ -f "$DAILY_NOTE" ]; then
-  daily_content=$(sed -n '/^---$/,/^---$/!p' "$DAILY_NOTE" 2>/dev/null | head -15 | tr '\n' ' ' | sed 's/  */ /g' | cut -c1-400)
+if [ -n "$OBSIDIAN_CLI" ]; then
+  # Obsidian CLI path: search today's daily note via index (zero extra tokens for large vaults)
+  daily_content=$($OBSIDIAN_CLI search "date:$TODAY" --format json 2>/dev/null | \
+    python3 -c "import sys,json; d=json.load(sys.stdin); print(' | '.join(r.get('snippet','') for r in d[:3]))" 2>/dev/null || true)
+  # Get incomplete tasks across entire vault
+  tasks_content=$($OBSIDIAN_CLI tasks --incomplete --format json 2>/dev/null | \
+    python3 -c "import sys,json; d=json.load(sys.stdin); items=d[:5]; print(' | '.join(t.get('text','') for t in items))" 2>/dev/null || true)
   if [ -n "$daily_content" ]; then
-    context_parts+=("[Today's Note ($TODAY)] $daily_content")
+    context_parts+=("[Today ($TODAY) via Obsidian CLI] $daily_content")
+  fi
+  if [ -n "$tasks_content" ]; then
+    context_parts+=("[Open Tasks via Obsidian CLI] $tasks_content")
+  fi
+else
+  # Fallback: read daily note file directly
+  DAILY_NOTE="$VAULT_DIR/Human/Daily/${TODAY}.md"
+  if [ -f "$DAILY_NOTE" ]; then
+    daily_content=$(sed -n '/^---$/,/^---$/!p' "$DAILY_NOTE" 2>/dev/null | head -15 | tr '\n' ' ' | sed 's/  */ /g' | cut -c1-400)
+    if [ -n "$daily_content" ]; then
+      context_parts+=("[Today's Note ($TODAY)] $daily_content")
+    fi
   fi
 fi
 

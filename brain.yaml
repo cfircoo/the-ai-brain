@@ -69,6 +69,18 @@ memory:
   self_improve: true       # allow corrections to become permanent rules
 
 # ---------------------------------------------------------------------------
+# Integrations
+# ---------------------------------------------------------------------------
+integrations:
+  obsidian_cli:
+    enabled: false        # set true if Obsidian 1.12+ CLI is registered (obsidian version)
+    vault_name: ""        # Obsidian vault name (for multi-vault setups, leave empty for default)
+    # When enabled, the brain will use the Obsidian CLI for search, task listing,
+    # backlink traversal, and orphan detection instead of raw file reads.
+    # This reduces token usage by ~70,000x on large vaults (per Obsidian benchmarks).
+    # Requires Obsidian 1.12+ running with CLI enabled (Settings → General → CLI).
+
+# ---------------------------------------------------------------------------
 # Preferences
 # ---------------------------------------------------------------------------
 preferences:

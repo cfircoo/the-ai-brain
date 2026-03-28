@@ -155,6 +155,68 @@ If the user chooses to integrate:
 - Update the `status` frontmatter field from `staging` to `integrated`
 - Update today's daily note with a log entry
 
+## Advanced: PDF and Document Pipeline
+
+For importing large or messy documents (PDFs, DOCX, Excel, annual reports), use this pipeline to extract signal from noise:
+
+### Sub-step A: Organize by File Type
+
+If given a folder of mixed files:
+1. Scan the directory for file types
+2. Create subfolders: `PDFs/`, `DOCX/`, `Spreadsheets/`, `Other/`
+3. Move files to appropriate subfolders
+4. Report the organization to the user before proceeding
+
+### Sub-step B: Extract and Synthesize
+
+For each document:
+
+1. **Extract raw text** using available tools (Read for text files, Bash for `pdftotext` if available)
+
+2. **Synthesize with a focused prompt:**
+   ```
+   You are distilling [document type] into a knowledge artifact.
+   Extract ONLY:
+   - Core concepts and definitions
+   - Key decisions or findings
+   - Actionable insights
+   - Important data points or metrics
+   - Named entities (people, companies, products)
+
+   Ignore: formatting noise, headers/footers, boilerplate, redundant text.
+   Format as clean markdown with clear sections.
+   ```
+
+3. **Create a cheat-sheet note** — not a full copy, just the signal:
+   ```markdown
+   ---
+   date: YYYY-MM-DD
+   tags: [ingested, {document-type}]
+   type: reference
+   source: {original filename}
+   ---
+
+   # {Document Title} — Key Points
+
+   {synthesized content}
+   ```
+
+### Sub-step C: Import to Vault
+
+Save synthesized notes to `Human/Projects/{topic}/` or ask user for preferred location.
+
+**With Obsidian CLI:**
+```bash
+obsidian open "{note-path}"  # open the new note to verify
+```
+
+### Sub-step D: Link to Related Notes
+
+After importing, suggest connections:
+- Search for existing notes on the same topic
+- Offer to add `[[wikilinks]]` to related content
+- Offer to update `Machine/Memory/entities.md` with new entities discovered
+
 </protocol>
 
 <rules>

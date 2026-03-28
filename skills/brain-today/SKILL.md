@@ -9,6 +9,10 @@ Perform a full morning startup ritual: load all vault context, create today's da
 
 <protocol>
 
+## Step 0: Detect Obsidian CLI
+
+Check if Obsidian CLI is available by running `obsidian version`. If it returns output, the CLI is active. When available, prefer CLI commands over direct file reads throughout this workflow — they use Obsidian's search index and cost near-zero tokens on large vaults.
+
 ## Step 1: Determine Dates
 
 Calculate today's date and yesterday's date in `YYYY-MM-DD` format. These are used for daily note paths and session log lookups.
@@ -33,6 +37,10 @@ Scan `Machine/Session-Logs/` for the 3 most recent log files (sorted by filename
 
 ## Step 4: Read Yesterday's Daily Note
 
+**With Obsidian CLI:** Use `obsidian daily-note --yesterday --format json` to get yesterday's note content and incomplete tasks in one command.
+
+**Without Obsidian CLI:** (existing file read approach below)
+
 Read `Human/Daily/{yesterday}.md` if it exists. Identify:
 
 - Tasks marked incomplete (unchecked `- [ ]` items)
@@ -40,6 +48,10 @@ Read `Human/Daily/{yesterday}.md` if it exists. Identify:
 - Anything explicitly flagged for "tomorrow"
 
 ## Step 5: Read or Create Today's Daily Note
+
+**With Obsidian CLI:** Use `obsidian daily-note --today` to open/create today's note using your configured daily note template.
+
+**Without Obsidian CLI:** (existing approach below)
 
 Check if `Human/Daily/{today}.md` exists.
 

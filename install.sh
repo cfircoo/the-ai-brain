@@ -102,6 +102,15 @@ check_deps() {
         HAS_YQ=false
     fi
 
+    # Optional: Obsidian CLI (1.12+)
+    if command -v obsidian >/dev/null 2>&1 && obsidian version &>/dev/null 2>&1; then
+        success "Obsidian CLI found (enhanced vault integration)"
+        HAS_OBSIDIAN_CLI=true
+    else
+        info "Obsidian CLI not found (install Obsidian 1.12+ and enable CLI in Settings → General)"
+        HAS_OBSIDIAN_CLI=false
+    fi
+
     success "All required dependencies satisfied"
 }
 
@@ -198,6 +207,16 @@ configure_brain() {
     yaml_set "$config_file" "agents.codex.enabled" "$ENABLE_CODEX"
     yaml_set "$config_file" "preferences.format" "$FORMAT"
     yaml_set "$config_file" "memory.self_improve" "$SELF_IMPROVE"
+
+    # Obsidian CLI
+    if $HAS_OBSIDIAN_CLI; then
+        yaml_set "$config_file" "integrations.obsidian_cli.enabled" "true"
+        ask "Obsidian vault name (leave blank if single vault)" "" OBSIDIAN_VAULT_NAME
+        if [ -n "$OBSIDIAN_VAULT_NAME" ]; then
+            yaml_set "$config_file" "integrations.obsidian_cli.vault_name" "$OBSIDIAN_VAULT_NAME"
+        fi
+        success "Obsidian CLI integration enabled"
+    fi
 
     success "Brain configured: $config_file"
 }
@@ -444,6 +463,7 @@ print_summary() {
     echo "    /brain-vault-align  Re-sync agent configs"
     echo "    /brain-reflect      AI self-review"
     echo "    /brain-ingest       Import external content"
+    echo "    /brain-canvas       Create Obsidian canvas visualizations"
     echo ""
 }
 
