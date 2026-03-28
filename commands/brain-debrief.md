@@ -1,5 +1,5 @@
 ---
-name: debrief
+name: brain-debrief
 description: End-of-session wrap-up ritual
 ---
 

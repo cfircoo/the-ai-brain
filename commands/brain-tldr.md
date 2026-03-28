@@ -1,5 +1,5 @@
 ---
-name: tldr
+name: brain-tldr
 description: Summarize session, file, or topic
 ---
 

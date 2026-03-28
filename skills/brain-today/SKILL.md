@@ -1,5 +1,5 @@
 ---
-name: today
+name: brain-today
 description: Morning startup - loads context, shows today's plan, flags overdue items. Use when starting the day, wanting a daily plan, or saying "good morning", "what's on today", "daily plan", "start the day".
 ---
 

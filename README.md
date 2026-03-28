@@ -6,7 +6,7 @@ A universal persistent memory system for AI agents. Install into any directory o
 
 | Agent | Config File | Hooks | Skills | Memory |
 |-------|-----------|-------|--------|--------|
-| Claude Code | CLAUDE.md | Mechanical (hooks) | /today, /new, /tldr, etc. | Full |
+| Claude Code | CLAUDE.md | Mechanical (hooks) | /brain-today, /brain-new, /brain-tldr, etc. | Full |
 | Cursor | .cursorrules | Instruction-based | N/A | Instruction-based |
 | Gemini CLI | GEMINI.md | Instruction-based | N/A | Instruction-based |
 | OpenAI Codex | AGENTS.md | Instruction-based | N/A | Instruction-based |
@@ -25,7 +25,7 @@ From within any Claude Code session:
 Then initialize the brain in your vault:
 
 ```
-/the-ai-brain:setup
+/the-ai-brain:brain-setup
 ```
 
 ### Option 2: Load as Local Plugin
@@ -38,7 +38,7 @@ git clone https://github.com/cfircoo/the-ai-brain.git
 claude --plugin-dir ./the-ai-brain
 ```
 
-Skills are available as `/the-ai-brain:today`, `/the-ai-brain:debrief`, etc.
+Skills are available as `/the-ai-brain:brain-today`, `/the-ai-brain:brain-debrief`, etc.
 
 ### Option 3: Standalone Installer
 
@@ -91,7 +91,7 @@ The installer will:
 
 ```
 You correct the AI → Logged to corrections.md →
-/reflect analyzes patterns → Proposes rule changes →
+/brain-reflect analyzes patterns → Proposes rule changes →
 active-rules.md updated → Agent configs regenerated →
 Next session: AI behaves better → Repeat
 ```
@@ -100,14 +100,14 @@ Next session: AI behaves better → Repeat
 
 | Command | Description |
 |---------|-------------|
-| `/today` | Morning startup - loads context, plans your day |
-| `/new` | Brain-dump triage - routes raw input to correct files |
-| `/tldr` | Summarize a session, file, or topic |
-| `/debrief` | End-of-session ritual - logs session, updates memory |
-| `/vault-audit` | Health check - orphans, stale files, consistency |
-| `/vault-align` | Re-sync agent configs from brain.yaml |
-| `/reflect` | AI self-review - analyzes patterns, proposes improvements |
-| `/ingest` | Import external content with proper formatting |
+| `/brain-today` | Morning startup - loads context, plans your day |
+| `/brain-new` | Brain-dump triage - routes raw input to correct files |
+| `/brain-tldr` | Summarize a session, file, or topic |
+| `/brain-debrief` | End-of-session ritual - logs session, updates memory |
+| `/brain-vault-audit` | Health check - orphans, stale files, consistency |
+| `/brain-vault-align` | Re-sync agent configs from brain.yaml |
+| `/brain-reflect` | AI self-review - analyzes patterns, proposes improvements |
+| `/brain-ingest` | Import external content with proper formatting |
 
 ## Architecture
 
@@ -125,7 +125,7 @@ core/brain-rules.md ← Universal behavioral rules
         └─→ AGENTS.md      (OpenAI Codex)
 ```
 
-Edit `brain.yaml`, run `/vault-align`, and all agents update.
+Edit `brain.yaml`, run `/brain-vault-align`, and all agents update.
 
 ### Hooks (Claude Code)
 
@@ -162,7 +162,7 @@ bash install.sh /path/to/your/vault
 Or from within a brain-enabled vault:
 
 ```
-/vault-align
+/brain-vault-align
 ```
 
 ## Uninstalling

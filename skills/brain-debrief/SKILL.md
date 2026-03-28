@@ -1,5 +1,5 @@
 ---
-name: debrief
+name: brain-debrief
 description: End-of-session ritual - writes session log, updates memory, flags carryovers. Use when the user says "debrief", "end session", "wrap up", "save session", "closing time", "done for now", "shutting down", or is about to end a session.
 ---
 

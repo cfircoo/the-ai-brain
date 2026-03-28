@@ -1,5 +1,5 @@
 ---
-name: new
+name: brain-new
 description: Universal brain-dump triage - accepts raw input and routes to correct files. Use when the user says "new", "brain dump", "capture this", "quick note", "log this", "add task", "idea", or pastes unstructured text to be processed into the vault.
 ---
 

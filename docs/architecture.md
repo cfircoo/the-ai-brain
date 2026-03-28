@@ -45,7 +45,7 @@ User works normally with AI
 
 ### Session End
 ```
-User runs /debrief (or Stop hook fires)
+User runs /brain-debrief (or Stop hook fires)
   → Write Machine/Session-Logs/{timestamp}.md
   → Update Machine/Memory/ files
   → Update .brain/state.json
@@ -54,9 +54,9 @@ User runs /debrief (or Stop hook fires)
 ### Self-Improvement
 ```
 User corrects AI → correction logged
-  → /reflect analyzes corrections
+  → /brain-reflect analyzes corrections
   → Proposes changes to active-rules.md
-  → /vault-align regenerates all agent configs
+  → /brain-vault-align regenerates all agent configs
 ```
 
 ## Multi-Agent Support

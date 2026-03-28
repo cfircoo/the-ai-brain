@@ -1,5 +1,5 @@
 ---
-name: vault-audit
+name: brain-vault-audit
 description: Vault health check and consistency report
 ---
 

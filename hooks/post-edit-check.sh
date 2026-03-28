@@ -33,7 +33,7 @@ fi
 # Check if the file is in Machine/Rules/ (specifically active-rules.md)
 if echo "$file_path" | grep -q "Machine/Rules/active-rules.md"; then
   cat <<'ENDJSON'
-{"userPromptSuffix": "NOTE: You just modified active-rules.md. Consider running /vault-align to ensure all agent configs are in sync with the updated rules."}
+{"userPromptSuffix": "NOTE: You just modified active-rules.md. Consider running /brain-vault-align to ensure all agent configs are in sync with the updated rules."}
 ENDJSON
   exit 0
 fi
@@ -41,7 +41,7 @@ fi
 # Check if any file in Machine/Rules/ was modified
 if echo "$file_path" | grep -q "Machine/Rules/"; then
   cat <<'ENDJSON'
-{"userPromptSuffix": "NOTE: You modified a file in Machine/Rules/. If this affects active rules, update active-rules.md and consider running /vault-align."}
+{"userPromptSuffix": "NOTE: You modified a file in Machine/Rules/. If this affects active rules, update active-rules.md and consider running /brain-vault-align."}
 ENDJSON
   exit 0
 fi

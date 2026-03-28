@@ -1,5 +1,5 @@
 ---
-name: setup
+name: brain-setup
 description: Initialize The AI Brain in the current directory. Creates vault structure, memory files, rules, templates, and agent configs.
 ---
 
@@ -136,7 +136,7 @@ tags: [brain, rules]
 # Rule Changelog
 
 ## {{today}} - Initial Setup
-- Created default rule set via /the-ai-brain:setup
+- Created default rule set via /the-ai-brain:brain-setup
 ```
 
 ## Step 6: Create Templates
@@ -189,7 +189,7 @@ If Claude Code was selected, create hook scripts in `.brain/hooks/`:
 
 **post-session.sh** - Outputs userPromptSuffix reminding to write session log. Updates state.json.
 
-**post-edit-check.sh** - Monitors writes to Machine/Rules/, suggests /vault-align if active-rules changed.
+**post-edit-check.sh** - Monitors writes to Machine/Rules/, suggests /brain-vault-align if active-rules changed.
 
 Then create or merge `.claude/settings.json` with hook configuration pointing to `.brain/hooks/` scripts.
 
@@ -200,7 +200,7 @@ Make all hook scripts executable with `chmod +x`.
 Output a clear summary showing:
 - What was created
 - Which agents were configured
-- Available commands (/today, /new, /tldr, /debrief, /vault-audit, /vault-align, /reflect, /ingest)
+- Available commands (/brain-today, /brain-new, /brain-tldr, /brain-debrief, /brain-vault-audit, /brain-vault-align, /brain-reflect, /brain-ingest)
 - Quick start instructions
 
 </protocol>

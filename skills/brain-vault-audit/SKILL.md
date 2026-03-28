@@ -1,5 +1,5 @@
 ---
-name: vault-audit
+name: brain-vault-audit
 description: Health check - counts notes, finds orphans, checks consistency. Use when the user says "vault audit", "health check", "check vault", "find orphans", "vault stats", "audit", or wants to understand the state of their vault.
 ---
 

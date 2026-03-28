@@ -1,5 +1,5 @@
 ---
-name: tldr
+name: brain-tldr
 description: Summarize current session, a specific file, or a topic from the vault. Use when the user says "tldr", "summarize", "recap", "what happened", "summary of", "catch me up", or wants a quick overview of something.
 ---
 

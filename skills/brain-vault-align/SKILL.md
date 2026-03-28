@@ -1,5 +1,5 @@
 ---
-name: vault-align
+name: brain-vault-align
 description: Re-sync all agent configs from brain.yaml and active-rules. Use when the user says "vault align", "sync configs", "regenerate configs", "update rules", "re-sync", "align vault", or when agent config files need to be regenerated after rule or structure changes.
 ---
 

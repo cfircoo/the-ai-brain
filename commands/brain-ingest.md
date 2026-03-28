@@ -1,5 +1,5 @@
 ---
-name: ingest
+name: brain-ingest
 description: Import external content into the vault
 ---
 

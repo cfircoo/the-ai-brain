@@ -1,5 +1,5 @@
 ---
-name: reflect
+name: brain-reflect
 description: AI self-review and pattern analysis
 ---
 

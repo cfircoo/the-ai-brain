@@ -1,5 +1,5 @@
 ---
-name: setup
+name: brain-setup
 description: Initialize The AI Brain in the current directory
 ---
 

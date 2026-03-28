@@ -1,5 +1,5 @@
 ---
-name: vault-align
+name: brain-vault-align
 description: Re-sync rules and agent configs from brain.yaml
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: today
+name: brain-today
 description: Morning startup planner
 ---
 

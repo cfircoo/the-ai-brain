@@ -1,5 +1,5 @@
 ---
-name: new
+name: brain-new
 description: Universal brain-dump triage
 ---
 
