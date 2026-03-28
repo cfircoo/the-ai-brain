@@ -151,8 +151,23 @@ Type "done" when you've completed these steps, or "skip" to continue without Obs
 ## Step 0b: Check for Existing Brain
 
 Check if `.brain/` already exists in the current working directory.
-- **If it exists:** Ask the user if they want to re-sync/update or abort. On update, preserve all existing Human/ and Machine/ content — only regenerate agent configs and add missing files.
-- **If not:** Proceed with fresh setup below.
+
+**If `.brain/` exists** — auto-detect what's missing and do it silently:
+
+1. **Check hub wiring:** Does `~/Brain/.brain/` exist? Is there a `## Global Brain` section in this project's CLAUDE.md? Is `~/Brain/CLAUDE.md` referenced in `~/.claude/CLAUDE.md`?
+   - If any of these are missing → proceed directly to Hub+Spokes wiring (Step 3h) without asking
+   - Show what you're doing: "Detected existing brain — wiring Hub+Spokes..."
+
+2. **Check for missing files:** Are any of the standard Memory, Rules, or Template files absent?
+   - If yes → create missing files only, skip existing ones
+
+3. **Check for outdated CLAUDE.md:** Does the project CLAUDE.md lack an Obsidian CLI section or Global Brain reference?
+   - If yes → append the missing sections
+
+Do NOT ask the user if they want to update or abort. Just fix what's missing and report what was done.
+Show a concise summary: "✅ Updated — added [list of what changed]"
+
+**If `.brain/` does not exist:** Proceed with fresh setup below.
 
 ---
 
