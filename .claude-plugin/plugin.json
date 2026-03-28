@@ -1,0 +1,12 @@
+{
+  "name": "the-ai-brain",
+  "description": "Universal persistent memory system for AI agents. Gives Claude Code (and Cursor, Gemini CLI, Codex) long-term memory, self-improving rules, session continuity, and structured workflows via an Obsidian-compatible vault architecture.",
+  "version": "1.0.0",
+  "author": {
+    "name": "cfircoo",
+    "email": "cfir@cfircoo.com"
+  },
+  "homepage": "https://github.com/cfircoo/the-ai-brain",
+  "repository": "https://github.com/cfircoo/the-ai-brain",
+  "license": "MIT"
+}

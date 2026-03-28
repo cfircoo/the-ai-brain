@@ -1,0 +1,79 @@
+# =============================================================================
+# The AI Brain - Configuration
+# =============================================================================
+# Single source of truth for all Brain settings.
+# This file is read by install scripts, agent generators, and runtime protocols.
+# =============================================================================
+
+brain:
+  name: "My AI Brain"
+  version: "1.0.0"
+
+# ---------------------------------------------------------------------------
+# Owner Profile
+# Populated during `brain install`. Agents use this for personalization.
+# ---------------------------------------------------------------------------
+owner:
+  name: ""
+  role: ""
+  goals: []
+
+# ---------------------------------------------------------------------------
+# Vault Configuration
+# The vault is the Obsidian (or plain markdown) folder that stores everything.
+# ---------------------------------------------------------------------------
+vault:
+  path: ""  # absolute path, filled during install (e.g. ~/Brain)
+  structure:
+    human_dir: "Human"
+    machine_dir: "Machine"
+    daily_dir: "Human/Daily"
+    projects_dir: "Human/Projects"
+    archive_dir: "Human/Archive"
+    session_logs_dir: "Machine/Session-Logs"
+    memory_dir: "Machine/Memory"
+    rules_dir: "Machine/Rules"
+    templates_dir: "Machine/Templates"
+
+# ---------------------------------------------------------------------------
+# Agent Integrations
+# Each agent gets its own config file generated from brain-rules + templates.
+# Set `enabled: true` for agents you use.
+# ---------------------------------------------------------------------------
+agents:
+  claude_code:
+    enabled: false
+    config_file: "CLAUDE.md"
+    hooks: true
+    skills: true
+  cursor:
+    enabled: false
+    config_file: ".cursorrules"
+  gemini_cli:
+    enabled: false
+    config_file: "GEMINI.md"
+  codex:
+    enabled: false
+    config_file: "AGENTS.md"
+
+# ---------------------------------------------------------------------------
+# Memory System
+# Controls which memory subsystems are active.
+# ---------------------------------------------------------------------------
+memory:
+  session_logs: true       # write a log at end of every session
+  max_recent_logs: 3       # how many recent logs to load on startup
+  entities: true           # track people, projects, tools, etc.
+  decisions: true          # track significant decisions with rationale
+  corrections: true        # track behavioral corrections from the user
+  self_improve: true       # allow corrections to become permanent rules
+
+# ---------------------------------------------------------------------------
+# Preferences
+# ---------------------------------------------------------------------------
+preferences:
+  format: "obsidian"       # obsidian | plain
+  wikilinks: true          # use [[wikilinks]] for internal references
+  frontmatter: true        # include YAML frontmatter on every new file
+  date_format: "YYYY-MM-DD"
+  timezone: ""             # e.g. "America/New_York", filled during install

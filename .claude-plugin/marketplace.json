@@ -1,0 +1,18 @@
+{
+  "name": "cfircoo",
+  "owner": {
+    "name": "cfircoo",
+    "email": "cfir@cfircoo.com"
+  },
+  "plugins": [
+    {
+      "name": "the-ai-brain",
+      "source": {
+        "source": "github",
+        "repo": "cfircoo/the-ai-brain"
+      },
+      "description": "Universal persistent memory system for AI agents. Gives Claude Code long-term memory, self-improving rules, and structured workflows.",
+      "version": "1.0.0"
+    }
+  ]
+}
