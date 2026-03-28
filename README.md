@@ -78,11 +78,57 @@ bash install.sh /path/to/your/vault
 ```
 
 The installer will:
-1. Ask a few configuration questions (your name, role, which agents you use)
-2. Create the vault directory structure
-3. Generate agent-specific config files
-4. Install hooks and skills (Claude Code)
-5. Initialize git for version control
+1. Auto-detect your role from git/README (no questions if context is clear)
+2. Ask your preferred architecture (Hub+Spokes default — press Enter)
+3. Create the vault directory structure
+4. Generate agent-specific config files
+5. Install hooks and skills (Claude Code)
+6. Wire the hub if Hub+Spokes was chosen
+
+**Adding a brain to an existing project:**
+```bash
+cd ~/projects/your-existing-project
+# Then in Claude Code:
+/the-ai-brain:brain-setup
+# Auto-detects context, defaults to Hub+Spokes
+```
+
+## Architecture Strategies
+
+### Hub + Spokes (default, recommended)
+
+One global brain for your identity + per-project brains for local context. Both are always in context simultaneously.
+
+```
+~/Brain/                         ← HUB (your personal OS)
+├── Human/Daily/                 ← daily notes, life captures
+├── Machine/Memory/
+│   ├── entities.md              ← people, tools — across ALL projects
+│   ├── decisions.md             ← life/career decisions
+│   └── projects.md              ← registry of all known projects
+└── CLAUDE.md                    ← who you are, global rules
+
+~/.claude/CLAUDE.md              ← loads ~/Brain on EVERY session
+
+~/projects/my-app/               ← SPOKE (project-specific)
+├── .brain/                      ← local memory, hooks
+└── CLAUDE.md                    ← project rules + references ~/Brain
+
+~/projects/other-project/        ← another SPOKE
+└── CLAUDE.md                    ← references ~/Brain automatically
+```
+
+**Setup:** Run `/the-ai-brain:brain-setup` in any project — Hub+Spokes is the default. Existing projects with no brain? Same command, it auto-detects context from your git/README.
+
+### Per-Project (isolated)
+
+Each project has its own brain with no shared memory. Good for completely unrelated projects or team repos.
+
+### Centralized (one vault)
+
+Everything in `~/Brain/`. One Obsidian vault, one graph view. Good for a personal knowledge OS without coding projects.
+
+---
 
 ## How It Works
 
