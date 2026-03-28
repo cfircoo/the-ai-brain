@@ -223,6 +223,7 @@ Next session: AI behaves better → Repeat
 | `/brain-reflect` | AI self-review - analyzes patterns, proposes improvements |
 | `/brain-ingest` | Import external content with proper formatting |
 | `/brain-canvas` | Create Obsidian JSON Canvas visualizations |
+| `/brain-seed` | Enrich the knowledge graph - creates MOC hubs, entity notes, cross-links |
 
 ## Architecture
 

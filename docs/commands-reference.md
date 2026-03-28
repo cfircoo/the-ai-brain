@@ -51,6 +51,13 @@ Re-sync agent configs from brain.yaml and active-rules. Run after editing brain.
 /brain-vault-align
 ```
 
+### /brain-seed
+Enrich the Obsidian knowledge graph. Scans all registered projects, discovers entities (tools, platforms, concepts), creates MOC hub notes and entity notes with dense cross-links, fills empty stubs, and reports graph density stats. Idempotent — safe to run repeatedly.
+
+```
+/brain-seed
+```
+
 ## Intelligence
 
 ### /brain-reflect
