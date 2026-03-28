@@ -11,6 +11,26 @@
 
 A universal persistent memory system for AI agents. Install into any directory or Obsidian vault to give your AI agent long-term memory, self-improving behavior, and structured workflows.
 
+## Prerequisites
+
+| Requirement | Required? | Notes |
+|-------------|-----------|-------|
+| [Claude Code](https://claude.ai/code) | **Required** | For hooks, skills, and full memory features |
+| `git` | **Required** | For version control of your vault |
+| `jq` | **Required** | For JSON processing in hooks |
+| [Obsidian 1.12+](https://obsidian.md/download) | Optional | Unlocks CLI mode — 70,000x faster vault search. Without it, brain uses raw file reads (still fully functional) |
+| `yq` | Optional | Better YAML parsing. Falls back to `awk` if missing |
+| `python3` | Optional | Used by hooks when Obsidian CLI is active |
+
+**Obsidian CLI setup** (if you want it):
+1. Install [Obsidian](https://obsidian.md/download) 1.12+
+2. Open Obsidian → Settings → General → enable **Command Line Interface**
+3. Click **Register CLI** — adds `obsidian` to your system PATH
+4. Run `obsidian version` in terminal to verify
+5. The brain auto-detects it during `install.sh`
+
+> Obsidian is **not required**. The brain works on any plain directory with raw markdown files.
+
 ## Supported Agents
 
 | Agent | Config File | Hooks | Skills | Memory |
