@@ -1,5 +1,7 @@
 ---
 name: brain-reflect
+model: claude-opus-4-6
+context: forked
 description: AI self-review - analyzes recent sessions, patterns, and proposes improvements. Use when the user says "reflect", "self-review", "analyze patterns", "how are we doing", "review sessions", "meta-analysis", or wants insight into recurring themes and AI performance.
 ---
 

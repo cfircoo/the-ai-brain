@@ -1,5 +1,7 @@
 ---
 name: brain-ingest
+model: claude-opus-4-6
+context: forked
 description: Consume external content into the vault with proper formatting. Use when the user says "ingest", "import", "add this article", "save this URL", "process this PDF", "read this and save it", or provides external content (file, URL, raw text) to be incorporated into the vault.
 ---
 

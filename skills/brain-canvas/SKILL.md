@@ -1,5 +1,7 @@
 ---
 name: brain-canvas
+model: claude-sonnet-4-6
+context: forked
 description: Create an Obsidian JSON Canvas visualization from vault content. Use when the user says "create a canvas", "visualize", "make a diagram", "map this out", "canvas view", or wants to create an Obsidian canvas file.
 ---
 

@@ -1,5 +1,7 @@
 ---
 name: brain-vault-audit
+model: claude-sonnet-4-6
+context: forked
 description: Health check - counts notes, finds orphans, checks consistency. Use when the user says "vault audit", "health check", "check vault", "find orphans", "vault stats", "audit", or wants to understand the state of their vault.
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: brain-debrief
+model: claude-haiku-4-5-20251001
 description: End-of-session ritual - writes session log, updates memory, flags carryovers. Use when the user says "debrief", "end session", "wrap up", "save session", "closing time", "done for now", "shutting down", or is about to end a session.
 ---
 

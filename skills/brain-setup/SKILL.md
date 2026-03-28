@@ -1,5 +1,7 @@
 ---
 name: brain-setup
+model: claude-opus-4-6
+context: forked
 description: Initialize The AI Brain in the current directory. Hybrid mode — silently infers from existing context when possible, interviews the user when context is sparse. Can spawn a sub-agent to gather profile information without interrupting the main session.
 ---
 
