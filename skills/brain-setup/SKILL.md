@@ -26,7 +26,7 @@ Before anything else, silently check for required and optional tools. Use `comma
 |------|-------|-------------------|
 | `python3` | `command -v python3` | Obsidian CLI JSON parsing in hooks |
 | `yq` | `command -v yq` | Better YAML parsing in generators |
-| `obsidian` | `command -v obsidian` + `obsidian version` | 70,000x faster vault search via CLI |
+| `obsidian` | `command -v obsidian` + `obsidian --version` | 70,000x faster vault search via CLI (requires Obsidian running) |
 
 ### If anything is missing:
 
@@ -72,22 +72,48 @@ Install Obsidian now? It unlocks 70,000x faster vault search. [y/N]
 ```
 
 If yes, install by platform:
+
+**macOS** — no Homebrew cask; use direct download:
 ```bash
-# macOS
-brew install --cask obsidian
+echo "Download Obsidian from: https://obsidian.md/download"
+echo "Or direct DMG: https://github.com/obsidianmd/obsidian-releases/releases/latest"
+open "https://obsidian.md/download"
+```
 
-# Linux (AppImage)
-wget -q https://github.com/obsidianmd/obsidian-releases/releases/latest/download/Obsidian-*.AppImage -O ~/obsidian.AppImage
-chmod +x ~/obsidian.AppImage
+**Windows** — winget (recommended):
+```powershell
+winget install Obsidian.Obsidian --accept-package-agreements --accept-source-agreements
+```
 
-# Windows (winget)
-winget install Obsidian.Obsidian
+**Linux** — AppImage (official) or Flatpak:
+```bash
+# AppImage (recommended)
+OBSIDIAN_VERSION="1.12.7"
+wget "https://github.com/obsidianmd/obsidian-releases/releases/download/v${OBSIDIAN_VERSION}/Obsidian-${OBSIDIAN_VERSION}.AppImage" -O ~/Obsidian.AppImage
+chmod +x ~/Obsidian.AppImage
+~/Obsidian.AppImage &
+
+# OR Flatpak
+flatpak install flathub md.obsidian.Obsidian
+
+# OR Snap (community-maintained)
+sudo snap install obsidian --classic
+```
+
+**Linux AppImage sandbox fix** (if you get a SUID sandbox error):
+```bash
+sudo chown root:root /tmp/.mount_obsidi*/chrome-sandbox 2>/dev/null
+sudo chmod 4755 /tmp/.mount_obsidi*/chrome-sandbox 2>/dev/null
 ```
 
 After installing Obsidian, remind:
 ```
-Obsidian installed. One manual step needed:
-  Open Obsidian → Settings → General → Enable Command Line Interface → Register CLI
+Obsidian installed. Two manual steps needed:
+  1. Open Obsidian → Settings → General → find "Command Line Interface"
+  2. Toggle it ON → click "Register CLI" → open a NEW terminal session
+  3. Verify with: obsidian --version
+
+  Note: Obsidian must be running in the background for CLI commands to work.
   Then re-run /brain-setup to activate CLI integration.
 ```
 

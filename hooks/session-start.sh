@@ -24,7 +24,7 @@ STATE_FILE="$BRAIN_DIR/state.json"
 OBSIDIAN_CLI=""
 if command -v obsidian &>/dev/null; then
   # Verify it's the Obsidian app CLI (not some other 'obsidian' binary)
-  if obsidian version &>/dev/null 2>&1; then
+  if obsidian --version &>/dev/null 2>&1; then
     OBSIDIAN_CLI="obsidian"
   fi
 fi
