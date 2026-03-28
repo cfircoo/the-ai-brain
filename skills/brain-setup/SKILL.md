@@ -58,18 +58,34 @@ Detect package manager priority: `brew` → `apt-get` → `pacman` → `winget` 
 
 After installing, re-verify. If still missing after install attempt, stop and tell the user to install manually.
 
-**For OPTIONAL tools** — show a summary after check, don't block:
+**For OPTIONAL tools** — show a summary and actively offer to install each missing one:
+
 ```
 Optional tools:
   ✅ python3  — found
-  ✅ yq       — found
-  ⬜ obsidian — not found (Obsidian CLI disabled; install Obsidian 1.12+ to enable)
+  ⬜ yq       — not found  → Install now for better YAML parsing? [Y/n]
+  ⬜ obsidian — not found  → Install now for 70,000x faster vault search? [Y/n]
 ```
 
-If `obsidian` is missing, offer:
+Ask about each missing optional tool individually. If the user says yes (or just presses Enter — default is Y), install it.
+
+**Install yq:**
+```bash
+# macOS
+brew install yq
+
+# Ubuntu/Debian
+sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+sudo chmod +x /usr/local/bin/yq
+
+# Arch
+sudo pacman -S go-yq
+
+# Windows (winget)
+winget install MikeFarah.yq
 ```
-Install Obsidian now? It unlocks 70,000x faster vault search. [y/N]
-```
+
+**Install Obsidian:**
 
 If yes, install by platform:
 
