@@ -1,5 +1,13 @@
 # The AI Brain
 
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](.claude-plugin/plugin.json)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-orange.svg)](https://claude.ai/code)
+[![Cursor](https://img.shields.io/badge/Cursor-supported-purple.svg)](https://cursor.sh)
+[![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-supported-blue.svg)](https://github.com/google-gemini/gemini-cli)
+[![OpenAI Codex](https://img.shields.io/badge/OpenAI%20Codex-supported-412991.svg)](https://openai.com)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/cfircoo/the-ai-brain/pulls)
+
 A universal persistent memory system for AI agents. Install into any directory or Obsidian vault to give your AI agent long-term memory, self-improving behavior, and structured workflows.
 
 ## Supported Agents
