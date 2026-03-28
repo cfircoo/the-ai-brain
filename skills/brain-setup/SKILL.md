@@ -270,6 +270,40 @@ Use the sub-agent's JSON output to populate the vault preview. Present it to the
 
 ---
 
+## Step 2D: Architecture Choice
+
+After the vault preview (Step 2A or 2B), and before the user confirms, show this:
+
+```
+One more thing — how do you want to structure your brain?
+
+1. Hub + Spokes (recommended)
+   ~/Brain/ holds your identity, global rules, and cross-project memory.
+   Each project gets its own .brain/ for local context.
+   Both are always in context — you get the best of both worlds.
+
+2. Per-Project only (what you see above)
+   Each project is isolated. No shared memory between projects.
+   Good if projects are completely unrelated.
+
+3. Centralized only
+   Everything in one vault. One CLAUDE.md, one memory, one graph.
+   Good if you want a single Obsidian vault for everything.
+
+[default: 1]
+```
+
+Store the choice as `ARCH_MODE` = `hub-spokes` | `per-project` | `centralized`.
+
+**If hub+spokes:**
+- Also ask: "Where should the hub live?" (default: `~/Brain`)
+- Check if `~/Brain/.brain/` already exists
+  - If yes: "Hub found at ~/Brain — will register this project in it"
+  - If no: "Will create a new hub at ~/Brain after this project is set up"
+- Store hub path as `HUB_PATH`
+
+---
+
 ## Step 3: Build After Confirmation
 
 Once the user says "build it", "yes", "go", "looks good", or similar — proceed.
@@ -356,7 +390,57 @@ Generate `CLAUDE.md` at vault root. Include:
 
 Ask which other agents to configure (Cursor, Gemini CLI, Codex) — or skip this question if they already told you in Step 2.
 
-### 3h. Install Hooks (Claude Code)
+### 3h. Hub+Spokes Wiring (if ARCH_MODE = hub-spokes)
+
+**Step A — Register this project in the hub:**
+
+Append to `{HUB_PATH}/Machine/Memory/projects.md` (create if missing):
+```markdown
+- [[{project-name}]] — path: {absolute project path} | domain: {inferred domain} | added: {today}
+```
+
+**Step B — Add hub reference to this project's CLAUDE.md:**
+
+Append this section to the project's `CLAUDE.md`:
+```markdown
+## Global Brain
+At startup, also read `{HUB_PATH}/CLAUDE.md` for:
+- Who I am (identity, role, global preferences)
+- Global rules that apply to all projects
+- Cross-project entities (people, tools, recurring clients)
+- Long-term decisions and career context
+```
+
+**Step C — If hub doesn't exist yet, scaffold it:**
+
+Run `/the-ai-brain:brain-setup` in `{HUB_PATH}` in hub mode:
+- Same vault structure (Human/ + Machine/)
+- CLAUDE.md focused on identity, not project specifics
+- `Machine/Memory/projects.md` — registry of all known projects
+- No project-specific rules (those stay per-project)
+- Scope: personal OS (work + life if user wants)
+
+**Step D — Wire `~/.claude/CLAUDE.md` to the hub:**
+
+Append to `~/.claude/CLAUDE.md` (create if missing):
+```markdown
+## My Brain Hub
+At the start of every session, read {HUB_PATH}/CLAUDE.md for global context:
+who I am, cross-project memory, and universal rules.
+```
+
+This fires in every Claude Code session on this machine — even outside any project.
+
+**Step E — Update hub's active-rules.md to include project awareness:**
+
+Append to `{HUB_PATH}/Machine/Rules/active-rules.md`:
+```markdown
+{N+1}. **Projects**: Known projects are in Machine/Memory/projects.md. When a project is mentioned, offer to read its .brain/ for full context.
+```
+
+---
+
+### 3i. Install Hooks (Claude Code)
 
 Create in `.brain/hooks/`:
 - `session-start.sh` — reads state + session logs + context-cache + active-rules + today's note → outputs `userPromptPrefix` JSON
@@ -371,7 +455,9 @@ Create/merge `.claude/settings.json` with hook configuration.
 
 ## Step 4: Context Injection
 
-After building, ask:
+**Skip this step if ARCH_MODE = hub-spokes** — Step 3h already wired `~/.claude/CLAUDE.md` to the hub. The project CLAUDE.md also already references the hub. Nothing more needed.
+
+**For per-project or centralized mode**, ask:
 
 ```
 One last thing — how do you want your vault context loaded into Claude Code?
@@ -384,7 +470,7 @@ One last thing — how do you want your vault context loaded into Claude Code?
 
 If **Global** selected: append to `~/.claude/CLAUDE.md` (create if needed):
 ```markdown
-## My Personal Brain
+## My Brain
 At the start of every session, read [absolute vault path]/CLAUDE.md for context about who I am, my work, and my conventions.
 ```
 
@@ -397,11 +483,18 @@ If **Manual**: show the line to paste.
 ```
 ✅ Your AI Brain is live.
 
-📁 Vault: [path]
-🧠 Memory: 4 files initialized
-📋 Rules: 7 default rules active
-🔗 Hooks: session continuity installed
+📁 Vault:      [project path]
+🏛 Hub:        [hub path — if hub+spokes, else "none"]
+🧠 Memory:     4 files initialized
+📋 Rules:      7+ default rules active
+🔗 Hooks:      session continuity installed
 ⚡ Obsidian CLI: [detected / not detected]
+🌐 Architecture: [Hub+Spokes / Per-Project / Centralized]
+
+[If Hub+Spokes:]
+  Hub wired:   ~/.claude/CLAUDE.md → [hub path]/CLAUDE.md
+  Project registered in [hub path]/Machine/Memory/projects.md
+  Every session on this machine now loads your global identity.
 
 Your slash commands:
   /brain-today    — run this tomorrow morning
@@ -414,7 +507,7 @@ Your slash commands:
   /brain-ingest [path] — extracts signal, creates clean notes
 
 [If Obsidian not detected:]
-  Optional: Install Obsidian 1.12+ → Settings → General → Enable CLI
+  Optional: Install Obsidian 1.12+ → Settings → General → Advanced → Enable CLI
   Re-run /brain-setup to activate enhanced vault integration.
 ```
 
